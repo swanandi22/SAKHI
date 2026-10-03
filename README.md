@@ -1,4 +1,4 @@
-# SAKHI â€” Smart Assistance for keeping HER informed
+# SAKHI: Smart Assistance for keeping HER informed
 
 SAKHI is a journey-level contextual safety intelligence layer over routing.
 
@@ -103,7 +103,8 @@ Creates a journey by calling the routing provider and returns an ordered list of
 SAKHI's contextual safety risk score estimates safety-relevant contextual conditions for a journey segment. **It is not a crime probability, individual crime prediction, or guarantee of safety.**
 
 The current prototype follows this logical flow:
-JourneySegment -> extracted features -> historical baseline -> prototype heuristic -> isk score + confidence`n
+JourneySegment -> extracted features -> historical baseline -> prototype heuristic -> 
+isk score + confidence`n
 #### Key Principles:
 - **Historical Baseline**: Aggregate historical data acts as a regional prior/context signal, not a street-level ground truth.
 - **Confidence**: Confidence is independent from risk. Missing context deterministically decreases the confidence score.
@@ -111,19 +112,19 @@ JourneySegment -> extracted features -> historical baseline -> prototype heurist
 - **Synthetic Data**: If synthetic granular data is used in future phases for ML demonstration, it will be explicitly labelled.
 
 
-### Phase 3B — XGBoost Contextual Risk Model
+### Phase 3B â€” XGBoost Contextual Risk Model
 
 In Phase 3B, a prototype XGBoost Regressor model is integrated. It produces a continuous 0-100 contextual risk score. This model acts as an intelligence layer predicting safety-relevant contextual conditions.
 
 #### Key Principles:
 - **Synthetic Prototype Dataset**: The model is trained on explicitly synthetic prototype data (generated via a mathematical relationship with controlled noise), not real incident data. We avoid treating NCRB aggregate data as street-level labels to prevent inaccurate mapping.
 - **Not Crime Prediction**: The output is a prototype contextual risk score, NOT a crime probability or individual crime prediction.
-- **Evaluation**: Training metrics (MAE, MSE, RMSE, R²) evaluate the model's ability to learn the synthetic dataset's underlying mathematical relationship. They demonstrate the ML pipeline but do NOT establish real-world predictive validity.
+- **Evaluation**: Training metrics (MAE, MSE, RMSE, RÂ²) evaluate the model's ability to learn the synthetic dataset's underlying mathematical relationship. They demonstrate the ML pipeline but do NOT establish real-world predictive validity.
 - **Heuristic Fallback**: If the ML model is unavailable or inference fails, SAKHI gracefully falls back to the deterministic Phase 3A heuristic.
 - **Independent Confidence**: The confidence score remains entirely independent of the ML model, driven purely by the availability of input context.
 
 
-### Phase 3C — SHAP Explainability
+### Phase 3C â€” SHAP Explainability
 
 Phase 3C adds explainability to the XGBoost contextual risk model using SHAP (SHapley Additive exPlanations).
 
@@ -135,7 +136,7 @@ Phase 3C adds explainability to the XGBoost contextual risk model using SHAP (SH
 - **Prototype Limitation**: SHAP explains the behavior of the trained prototype model on synthetic data; it does not validate the model's real-world predictive accuracy.
 
 
-### Phase 4 — Risk-Aware Route Ranking
+### Phase 4 â€” Risk-Aware Route Ranking
 
 Phase 4 aggregates segment-level contextual risk into route-level metrics and provides three distinct route options: Safest, Balanced, and Fastest.
 
@@ -148,7 +149,7 @@ Phase 4 aggregates segment-level contextual risk into route-level metrics and pr
 - **Prototype Limitation**: The lpha, eta, and gamma route-ranking coefficients are prototype decision parameters. They have NOT been empirically validated as universal safety preferences, nor does the system guarantee absolute safety.
 
 
-### Phase 5 — Dynamic Contextual Rerouting
+### Phase 5 â€” Dynamic Contextual Rerouting
 
 Phase 5 adds support for real-time (simulated) contextual updates, allowing SAKHI to evaluate changing safety signals during an active journey.
 
@@ -159,7 +160,7 @@ Phase 5 adds support for real-time (simulated) contextual updates, allowing SAKH
 - **Prototype Limitations**: Context updates use the \simulated_demo\ source. This architecture is designed to demonstrate dynamic recalculation and does NOT represent real-time integration with live CCTV, crowdsourced safety portals, or police intelligence feeds.
 
 
-### Phase 6 — Mobile Prototype Frontend
+### Phase 6 â€” Mobile Prototype Frontend
 
 Phase 6 introduces a fully functional React Native mobile prototype built with Expo. This app consumes the existing SAKHI FastAPI intelligence backend.
 
@@ -175,9 +176,11 @@ px expo start\.
 5. Use the Expo Go app on your phone, or run in an iOS/Android simulator.
 
 #### Key Features & Prototype Limitations:
-- **Mobile UX**: The UI is optimized for touch with native maps (\eact-native-maps\).
+- **Mobile UX**: The UI is optimized for touch with native maps (\
+eact-native-maps\).
 - **Live Explainability**: SHAP explanations are rendered natively in mobile bottom-sheets/cards.
 - **Demo Context**: The \Simulate Safety Report\ button demonstrates real-time dynamic rerouting by communicating with the backend.
-- **No Native Compilations**: The prototype avoids complex native libraries requiring EAS builds (standard \eact-native-maps\ works in Expo Go).
+- **No Native Compilations**: The prototype avoids complex native libraries requiring EAS builds (standard \
+eact-native-maps\ works in Expo Go).
 - **Limitations**: The SOS and Offline modes are UI demonstrations only. They do not yet integrate with real emergency dispatch APIs or local SQLite databases.
 
